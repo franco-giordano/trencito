@@ -1,0 +1,11 @@
+name = "trencito-workers"
+main = "src/index.ts"
+compatibility_date = "2022-07-03"
+node_compat = true
+
+kv_namespaces = [
+  { binding = "TRENCITO", id = "a5527f907b214195b556d8b95cf6a2f7", preview_id = "63ac3fc9c6eb4555b5fe5c66ac279b14" }
+]
+
+[triggers]
+crons = ["* * * * *"]
