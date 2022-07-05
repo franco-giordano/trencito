@@ -1,5 +1,5 @@
 {
-	"name": "smui-example-sveltekit",
+	"name": "trencito-front",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "svelte-kit dev --host --https",
