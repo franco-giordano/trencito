@@ -8,69 +8,68 @@
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-import * as cheerio from 'cheerio';
-
-export interface Env {
-  TRENCITO: KVNamespace;
-}
+import { Env } from './tipos';
+import { getParamsDePedidoString, guardarNuevoPedido, obtenerMapaEmails } from './almacenamiento';
+import { enviarMailVistoso, jsonify } from './utils';
+import { hayTrenesDisponibles } from './trenes';
 
 export default {
-  async fetch(
-    request: Request,
-    env: Env,
-    ctx: ExecutionContext
-  ): Promise<Response> {
-    let email = 'trencito.prueba1@giordano.ar';
-    let fechaTren = '12/9/2022';
-    let estacionSalida = 10;
-    let estacionLlegada = 12;
+    async fetch(
+        request: Request,
+        env: Env,
+        ctx: ExecutionContext
+    ): Promise<Response> {
 
-    console.log("PRUEBA ES", await env.TRENCITO.get('prueba'));
-    return new Response('xd', {
-      headers: {
-        'content-type': 'text/html;charset=UTF-8',
-      },
-    });
-  },
-  async scheduled(
-    controller: ScheduledController,
-    env: Env,
-    ctx: ExecutionContext
-  ): Promise<void> {
-    ctx.waitUntil(notificarDisponibilidad(env, controller.scheduledTime));
-  },
+        const contentType = request.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+            return jsonify({ err: 'Esta es una API JSON' });
+        }
+
+        const { email, fechaTren, estacionSalida, estacionLlegada } = await request.json();
+        console.log({ email, fechaTren, estacionSalida, estacionLlegada });
+
+        if (email === undefined ||
+            fechaTren === undefined ||
+            estacionSalida === undefined ||
+            estacionLlegada === undefined) {
+            return jsonify({ err: 'Parametros faltantes - debe definir email, fechaTren, estacionSalida y estacionLlegada' });
+        }
+
+        await guardarNuevoPedido(env.TRENCITO, email, fechaTren, estacionSalida, estacionLlegada);
+
+        // // force mail xd
+        // await notificarDisponibilidad(env, 1)
+
+        return jsonify({ok: 'Pedido guardado correctamente.'});
+    },
+    async scheduled(
+        controller: ScheduledController,
+        env: Env,
+        ctx: ExecutionContext
+    ): Promise<void> {
+        ctx.waitUntil(notificarDisponibilidad(env));
+    },
 };
 
-function generarParams(): URLSearchParams {
-  return new URLSearchParams({
-    'busqueda[tipo_viaje]': '1',
-    'busqueda[origen]': '11',
-    'busqueda[destino]': '194',
-    'busqueda[fecha_ida]': '15/07/2022',
-    'busqueda[fecha_vuelta]': '',
-    'busqueda[cantidad_pasajeros][adulto]': '1',
-    'busqueda[cantidad_pasajeros][jubilado]': '0',
-    'busqueda[cantidad_pasajeros][menor]': '0',
-    'busqueda[cantidad_pasajeros][bebe]': '0',
-  })
+async function notificarDisponibilidad(env: Env) {
+    console.log("RUNNING SCHEDULE");
+
+    const emails = await obtenerMapaEmails(env.TRENCITO);
+
+    for (const [email, pedidos] of Object.entries(emails)) {
+        for (const [codigo, habilitado] of Object.entries(pedidos)) {
+            if (habilitado === true) {
+                const [fechaTren, estacionSalida, estacionLlegada] = getParamsDePedidoString(codigo);
+
+                const hayDisponibles = await hayTrenesDisponibles(fechaTren, estacionSalida, estacionLlegada);
+
+                if (hayDisponibles) {
+                    await enviarMailVistoso(email, fechaTren, estacionSalida, estacionLlegada, env.DKIM_PRIVATE_KEY);
+                } else {
+                    console.log("NO MANDO NADA A ", email)
+                }
+            }
+        }
+    }
+    console.log("TERMINO SCHEDULE");
 }
-
-
-async function notificarDisponibilidad(env: Env, time: number) {
-  console.log("RUNNING SCHEDULE");
-
-  const trenesHtml = await fetch('https://webventas.sofse.gob.ar/calendario.php',
-    {
-      body: generarParams(),
-      method: 'POST'
-    }).then(r => r.text());
-
-
-  const $ = cheerio.load(trenesHtml);
-  const hayDisponibles = $('.dia_disponible').text().includes('Asientos disponibles');
-  console.log(hayDisponibles);
-  console.log(await env.TRENCITO.put('prueba', hayDisponibles + ' - ' + time));
-  console.log("TERMINO SCHED");
-  
-}
-
