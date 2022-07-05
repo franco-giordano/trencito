@@ -9,6 +9,7 @@ export function jsonify(respuesta: any): Response | PromiseLike<Response> {
 }
 
 const HTML_BASE = `
+<!DOCTYPE html>
 <html>
 <body style="background-color: #FFD35E;font-family: sans-serif;text-align: center">
     <div style="font-size: 5rem">

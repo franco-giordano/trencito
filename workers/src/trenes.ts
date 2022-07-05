@@ -2,14 +2,17 @@ import * as cheerio from 'cheerio';
 
 export async function hayTrenesDisponibles(fechaTren: string, estacionSalida: string, estacionLlegada: string) {
     // TODO: agregar cache
-    const trenesHtml = await fetch(
+    const response = await fetch(
         'https://webventas.sofse.gob.ar/calendario.php',
         {
             body: generarParams(fechaTren, estacionSalida, estacionLlegada),
             method: 'POST'
         }
-    ).then(r => r.text());
+    );
+    const trenesHtml = await response.text();
 
+    console.log("Request a SOFSE fue", response.status);
+    
     // 'algoritmo' para detectar si hay algun asiento disponible en el tren dado
     const $ = cheerio.load(trenesHtml);
     const hayDisponibles = $('.dia_disponible').text().includes('Asientos disponibles');
