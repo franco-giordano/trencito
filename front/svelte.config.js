@@ -7,13 +7,10 @@ const config = {
 	// for more information about preprocessors
 	preprocess: preprocess(),
 	kit: {
-		adapter: adapter({
-			pages: 'build',
-			assets: 'build',
-		}),
-		prerender: {
-			default: true
-		}
+		adapter: adapter(),
+		// prerender: {
+		// 	default: true
+		// }
 	},
 };
 
