@@ -3,6 +3,7 @@
 // MDC Typography
 //
 @use '@material/typography/mdc-typography';
+@use '@material/theme/index' as theme;
 
 html,
 body {
@@ -12,4 +13,9 @@ body {
 
 .container {
 	padding: 30px;
+	width: 100%;
+}
+
+.homepage-container {
+	background-color: theme.$primary;
 }

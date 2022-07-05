@@ -1,11 +1,12 @@
 <script lang="ts">
-	import Button from '@smui/button';
 	import type { TopAppBarComponentDev } from '@smui/top-app-bar';
 	import TopAppBar, { Row, Section, Title, AutoAdjust } from '@smui/top-app-bar';
 	import IconButton from '@smui/icon-button';
-	import { Label, Icon } from '@smui/common';
+	import { Icon } from '@smui/common';
 	import { Svg } from '@smui/common/elements';
-	import { mdiGithub, mdiWeb } from '@mdi/js';
+	import { mdiGithub } from '@mdi/js';
+	import Ripple from '@smui/ripple';
+	import { goto } from '$app/navigation';
 
 	let topAppBar: TopAppBarComponentDev;
 
@@ -29,17 +30,33 @@
 <TopAppBar bind:this={topAppBar} variant="standard">
 	<Row>
 		<Section>
-			<Title>🚂 trencito</Title>
+			<Title>
+				<div
+					use:Ripple={{ surface: true }}
+					on:click={() => goto('/')}
+					style="align-items: center; display: flex; flex-direction: column; border-radius: 17px; padding: .25rem"
+				>
+					<div>🚂 trencito</div>
+				</div>
+			</Title
+			>
 		</Section>
 		<Section align="end" toolbar>
-			<IconButton aria-label="GitHub" href="https://github.com/hperrin/svelte-material-ui">
+			<IconButton
+				on:click={switchTheme}
+				class="material-icons"
+				aria-label="Modo Oscuro"
+				title="Modo Oscuro"
+			>
+				{lightTheme ? 'light_mode' : 'dark_mode'}
+			</IconButton>
+			<IconButton
+				aria-label="GitHub"
+				href="https://github.com/franco-giordano/trencito"
+				title="Ver proyecto en GitHub"
+			>
 				<Icon component={Svg} viewBox="0 0 24 24">
 					<path fill="currentColor" d={mdiGithub} />
-				</Icon>
-			</IconButton>
-			<IconButton aria-label="Demo Site" href="https://sveltematerialui.com">
-				<Icon component={Svg} viewBox="0 0 24 24">
-					<path fill="currentColor" d={mdiWeb} />
 				</Icon>
 			</IconButton>
 		</Section>
@@ -48,9 +65,4 @@
 
 <AutoAdjust {topAppBar} style="display: flex; justify-content: space-between;">
 	<div class="container"><slot /></div>
-	<div class="container">
-		<Button on:click={switchTheme}>
-			<Label>{lightTheme ? 'Lights off' : 'Lights on'}</Label>
-		</Button>
-	</div>
 </AutoAdjust>

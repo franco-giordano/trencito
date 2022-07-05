@@ -1,2 +1,4 @@
 {"rule":"WHITESPACE_RULE","sentence":"^\\Q%svelte.head% \t</head> \t<body> \t\t<div>%svelte.body%</div> \t</body> </html>\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q%svelte.head% \t</head> \t<body> \t\t<div>%svelte.body%</div> \t</body> </html>\\E$"}
+{"rule":"WHITESPACE_RULE","sentence":"^\\Q%svelte.head% </head> <body style=\"height:100%\"> \t<div style=\"height:100%\">%svelte.body%</div> </body> </html>\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q%svelte.head% </head> <body style=\"height:100%\"> \t<div style=\"height:100%\">%svelte.body%</div> </body> </html>\\E$"}
