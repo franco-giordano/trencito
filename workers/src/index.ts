@@ -10,7 +10,7 @@
 
 import { Env } from './tipos';
 import { getParamsDePedidoString, guardarNuevoPedido, obtenerMapaEmails } from './almacenamiento';
-import { enviarMailVistoso, jsonify } from './utils';
+import { enviarMailVistoso, jsonify, respuestaCors } from './utils';
 import { hayTrenesDisponibles } from './trenes';
 
 export default {
@@ -22,7 +22,12 @@ export default {
 
         const contentType = request.headers.get('content-type') || '';
         if (!contentType.includes('application/json')) {
+            // await notificarDisponibilidad(env);
             return jsonify({ err: 'Esta es una API JSON' });
+        }
+        if (request.method === 'OPTIONS') {
+            // Handle CORS preflight requests
+            return respuestaCors();
         }
 
         const { email, fechaTren, estacionSalida, estacionLlegada } = await request.json();
@@ -40,7 +45,7 @@ export default {
         // // force mail xd
         // await notificarDisponibilidad(env, 1)
 
-        return jsonify({ok: 'Pedido guardado correctamente.'});
+        return jsonify({ ok: 'Pedido guardado correctamente.' });
     },
     async scheduled(
         controller: ScheduledController,
