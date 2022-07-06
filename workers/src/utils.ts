@@ -1,4 +1,5 @@
 import { enviarMail } from "./mailer";
+import { getNombreEstacion } from "./trenes";
 
 export function jsonify(respuesta: any, status: number = 200): Response | PromiseLike<Response> {
     return new Response(JSON.stringify(respuesta), {
@@ -39,8 +40,8 @@ de Trenes Argentinos <a href="https://webventas.sofse.gob.ar/index.php">acá</a>
 <div style="font-size: 1rem; padding: 1rem; white-space: pre-wrap">
 Informacion del viaje:
 Fecha: ${fechaTren}
-Estacion Salida: ${estacionSalida}
-Estacion Llegada: ${estacionLlegada}
+Estacion Salida: ${getNombreEstacion(estacionSalida)}
+Estacion Llegada: ${getNombreEstacion(estacionLlegada)}
 </div>
 
 <div style="font-size: 1rem; padding: 1rem; white-space: pre-wrap; ">Para dar de baja estos avisos entra <a href="https://trencito.giordano.ar/baja">acá</a></div>

@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio';
+import { MAPA_ESTACIONES } from './constantes';
 
 export async function hayTrenesDisponibles(fechaTren: string, estacionSalida: string, estacionLlegada: string) {
     // TODO: agregar cache
@@ -18,6 +19,10 @@ export async function hayTrenesDisponibles(fechaTren: string, estacionSalida: st
     const hayDisponibles = $('.dia_disponible').text().includes('Asientos disponibles');
 
     return hayDisponibles;
+}
+
+export function getNombreEstacion(idEstacion:string) {
+    return MAPA_ESTACIONES[idEstacion] || `id${idEstacion} (estacion desconocida)`
 }
 
 // respeta API de SOFSE

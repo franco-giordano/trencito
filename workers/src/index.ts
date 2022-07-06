@@ -49,7 +49,6 @@ router.post("/pedidos", async (request: Request, env, context) => {
 router.patch("/pedidos", async (request: Request, env, context) => {
     const contentType = request.headers.get('content-type') || '';
     if (!contentType.includes('application/json')) {
-        // await notificarDisponibilidad(env);
         return jsonify({ err: 'Esta es una API JSON' });
     }
 
@@ -67,7 +66,10 @@ router.patch("/pedidos", async (request: Request, env, context) => {
 
 router.options('*', respuestaCors);
 
-router.all('*', () => jsonify({ err: 'No se encuentra' }, 404));
+router.all('*', async (request, env, context) => {
+    // await notificarDisponibilidad(env);
+    return jsonify({ err: 'No se encuentra' }, 404)
+});
 
 async function notificarDisponibilidad(env: Env) {
     console.log("RUNNING SCHEDULE");
