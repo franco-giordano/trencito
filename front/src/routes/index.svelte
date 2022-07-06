@@ -32,11 +32,11 @@
 	<Paper class="home-paper" elevation={2}>
 		<Title>🤔 Qué es esto?</Title>
 		<Content style="display: flex; flex-direction: column; gap: 1rem; white-space: pre-line;">
-			Basicamente esta pagina web te avisa cuando hay pasajes disponibles en Trenes Argentinos.
+			Basicamente esta pagina web te avisa cuando hay pasajes disponibles de larga distancia en Trenes Argentinos.
 			
 			Basta con indicar que fecha de tren buscas, de que origen a que destino, y te llegara un mail cuando la aplicacion detecte tickets disponibles.
 			
-			Los tickets se buscan en la <a href="https://webventas.sofse.gob.ar/" style="display: contents" target="_blank" rel="noopener noreferrer">pagina oficial de Trenes Argentinos</a> automaticamente cada 8 horas.
+			Los tickets se buscan en la <a href="https://webventas.sofse.gob.ar/" style="display: contents" target="_blank" rel="noopener noreferrer">pagina oficial de SOFSE</a> automaticamente cada 8 horas.
 			
 			De momento son solo viajes de ida, para 1 adulto, y <b style="display: contents">las fechas NO son exactas (si queres un pasaje para el dia 14 y hay disponible para el dia 15, te llegará un aviso igual).</b> Esto eventualmente cambiará pero bueno, tiempo al tiempo (?)
 
