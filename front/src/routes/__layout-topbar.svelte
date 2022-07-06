@@ -27,7 +27,7 @@
 	}
 </script>
 
-<TopAppBar bind:this={topAppBar} variant="standard">
+<TopAppBar bind:this={topAppBar} variant="fixed">
 	<Row>
 		<Section>
 			<Title>
