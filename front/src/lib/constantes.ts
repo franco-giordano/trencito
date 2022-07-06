@@ -129,7 +129,7 @@ const ESTACIONES: Estacion[] = [
     { "id_unico_estacion": 434, "nombre": "Zarate" }
 ];
 
-const URL_API = 'https://trencito-api.giordano.ar';
+const URL_API = 'https://trencito-api.giordano.ar/pedidos'; // 'http://localhost:8787/pedidos' //
 
 export {
     ESTACIONES,

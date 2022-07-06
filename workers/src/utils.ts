@@ -1,17 +1,17 @@
 import { enviarMail } from "./mailer";
 
-export function jsonify(respuesta: any): Response | PromiseLike<Response> {
+export function jsonify(respuesta: any, status: number = 200): Response | PromiseLike<Response> {
     return new Response(JSON.stringify(respuesta), {
         headers: {
             'content-type': 'application/json',
             'Access-Control-Allow-Origin': '*',
         },
+        status
     });
 }
 
 const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS',
+    'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS,PATCH',
     'Access-Control-Max-Age': '86400',
     'Access-Control-Allow-Headers': 'content-type'
 };
@@ -52,4 +52,12 @@ Estacion Llegada: ${estacionLlegada}
         HTML_BASE,
         'text/html',
         dkim_priv_key);
+}
+
+export function parametrosInvalidos(email: string, fechaTren: string, estacionSalida: string, estacionLlegada: string) {
+    return email === undefined ||
+        !email.includes('@') ||
+        fechaTren === undefined ||
+        estacionSalida === undefined ||
+        estacionLlegada === undefined;
 }

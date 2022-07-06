@@ -33,3 +33,15 @@ export async function guardarNuevoPedido(kvNamespace: KVNamespace, email: string
 
     await guardarMapaEmails(kvNamespace, emails);
 }
+
+export async function eliminarPedido(kvNamespace: KVNamespace, email: string, fechaTren: string, estacionSalida: number, estacionLlegada: number) {
+    const emails = await obtenerMapaEmails(kvNamespace);
+
+    if (emails[email] === undefined) {
+        emails[email] = {};
+    }
+
+    emails[email][getPedidoString(fechaTren, estacionSalida, estacionLlegada)] = false;
+
+    await guardarMapaEmails(kvNamespace, emails);
+}

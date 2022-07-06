@@ -1,11 +1,13 @@
 <script lang="ts">
-	
 	import Paper, { Title, Subtitle, Content } from '@smui/paper';
 	import type { Estacion } from '$lib/constantes';
 	import FormularioPedido from '$lib/FormularioPedido.svelte';
+	import { eliminarPedido } from '$lib/api';
 
-	const onEnviar = (emailNotificar: string, fechaTren: string, estacionSalida: Estacion, estacionLlegada: Estacion) => {
-		console.log("xd");
+	let mensaje = "";
+
+	const onEnviar = async (emailNotificar: string, fechaTren: string, estacionSalida: Estacion, estacionLlegada: Estacion) => {
+		mensaje = await eliminarPedido(emailNotificar, fechaTren, estacionSalida, estacionLlegada);
 	}
 </script>
 
@@ -17,10 +19,11 @@
 	<Paper class="registrar-paper" elevation={2}>
 		<Title>🗑️ Eliminar pedido</Title>
 		<Subtitle>
-			Completá con los datos exactos que te registraste para dar de baja tus avisos.
+			Completá con los datos exactos que te registraste para dar de baja esos avisos.
 		</Subtitle>
 		<Content style="display: flex; flex-direction: column; gap: 1rem">
 			<FormularioPedido {onEnviar} />
+			{mensaje}
 		</Content>
 	</Paper>
 
