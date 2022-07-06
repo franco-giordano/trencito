@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-No te pierdas ningun tren! Trencito te avisa cuando hay pasajes disponibles en Trenes Argentinos, asi conseguis los mejores lugares.
+No te pierdas ningun tren! Trencito te avisa cuando hay pasajes disponibles en Trenes Argentinos, asi conseguis los mejores lugares. Busca automaticamente pasajes de larga distancia usando la <a href="https://webventas.sofse.gob.ar/">pagina oficial de SOFSE.</a>
 </p>
 <p align="center">
 Hecho con SvelteKit y Cloudflare Workers+Pages.
