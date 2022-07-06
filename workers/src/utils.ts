@@ -4,18 +4,19 @@ export function jsonify(respuesta: any): Response | PromiseLike<Response> {
     return new Response(JSON.stringify(respuesta), {
         headers: {
             'content-type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
+            'Access-Control-Allow-Origin': '*',
         },
     });
 }
 
-export function respuestaCors() {
-    const corsHeaders = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS',
-        'Access-Control-Max-Age': '86400',
-    };
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,HEAD,POST,OPTIONS',
+    'Access-Control-Max-Age': '86400',
+    'Access-Control-Allow-Headers': 'content-type'
+};
 
+export function respuestaCors() {
     return new Response(null, {
         headers: corsHeaders,
     });

@@ -4,9 +4,10 @@ export async function enviarPedido(emailNotificar: string, fechaTren: string, es
     const resp = await fetch(
         URL_API,
         {
-            // headers: { 'content-type': 'application/json' },
+            headers: { 'content-type': 'application/json' },
             method: 'POST',
-            body: JSON.stringify({email: emailNotificar, fechaTren, estacionSalida, estacionLlegada})
+            // mode: 'cors',
+            body: JSON.stringify({ email: emailNotificar, fechaTren, estacionSalida, estacionLlegada })
         }
     );
     if (resp.ok) {

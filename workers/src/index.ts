@@ -19,15 +19,15 @@ export default {
         env: Env,
         ctx: ExecutionContext
     ): Promise<Response> {
-
+        if (request.method === 'OPTIONS') {
+            // Handle CORS preflight requests
+            return respuestaCors();
+        }
+        
         const contentType = request.headers.get('content-type') || '';
         if (!contentType.includes('application/json')) {
             // await notificarDisponibilidad(env);
             return jsonify({ err: 'Esta es una API JSON' });
-        }
-        if (request.method === 'OPTIONS') {
-            // Handle CORS preflight requests
-            return respuestaCors();
         }
 
         const { email, fechaTren, estacionSalida, estacionLlegada } = await request.json();
