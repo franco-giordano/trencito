@@ -3,12 +3,18 @@
 	import type { Estacion } from '$lib/constantes';
 	import FormularioPedido from '$lib/FormularioPedido.svelte';
 	import { eliminarPedido } from '$lib/api';
+	import ResultadoEnvios from './ResultadoEnvios.svelte';
 
-	let mensaje = "";
+	let mensaje = '';
 
-	const onEnviar = async (emailNotificar: string, fechaTren: string, estacionSalida: Estacion, estacionLlegada: Estacion) => {
+	const onEnviar = async (
+		emailNotificar: string,
+		fechaTren: string,
+		estacionSalida: Estacion,
+		estacionLlegada: Estacion
+	) => {
 		mensaje = await eliminarPedido(emailNotificar, fechaTren, estacionSalida, estacionLlegada);
-	}
+	};
 </script>
 
 <svelte:head>
@@ -23,13 +29,13 @@
 		</Subtitle>
 		<Content style="display: flex; flex-direction: column; gap: 1rem">
 			<FormularioPedido {onEnviar} />
-			{mensaje}
+			<ResultadoEnvios {mensaje} />
 		</Content>
 	</Paper>
 
-	<p style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-top: 3rem">
+	<div class="mdc-typography--body1" style="margin-top: 3rem; text-align: center;">
 		Si queres suscribirte a un nuevo aviso podes <a href="nuevo">hacerlo desde acá.</a>
-	</p>
+	</div>
 </div>
 
 <style>
