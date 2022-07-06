@@ -37,19 +37,19 @@ export async function enviarMailVistoso(email: string, fechaTren: string, estaci
     </div>
 <div style="font-size: 1.2rem; padding: 1rem; white-space: pre-wrap; ">Podes sacar tu pasaje
 de Trenes Argentinos <a href="https://webventas.sofse.gob.ar/index.php">acá</a></div>
-<div style="font-size: 1rem; padding: 1rem; white-space: pre-wrap">
-Informacion del viaje:
+<div style="font-size: 1rem; padding: .5rem; white-space: pre-wrap">Informacion del viaje:
 Fecha: ${fechaTren}
 Estacion Salida: ${getNombreEstacion(estacionSalida)}
 Estacion Llegada: ${getNombreEstacion(estacionLlegada)}
 </div>
 
-<div style="font-size: 1rem; padding: 1rem; white-space: pre-wrap; ">Para dar de baja estos avisos entra <a href="https://trencito.giordano.ar/baja">acá</a></div>
+<div style="font-size: 1rem; padding: 1rem;">
+Para dar de baja estos avisos entra <a href="https://trencito.giordano.ar/baja">acá</a></div>
 </body>
 </html>
-    `
-    await enviarMail(email,
-        `🚂 Pasajes disponibles para el ${fechaTren}`,
+`
+await enviarMail(email,
+    `🚂 Pasajes disponibles para el ${fechaTren}`,
         HTML_BASE,
         'text/html',
         dkim_priv_key);
