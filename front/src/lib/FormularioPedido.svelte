@@ -19,7 +19,7 @@
 </script>
 
 <Textfield input$style="width=100%" bind:value={emailNotificar} label="Email para avisar" type="email" required />
-<Textfield bind:value={fechaTren} label="Fecha Tren" type="date" min={fechaHoy} required />
+<Textfield bind:value={fechaTren} label="Fecha del Tren" type="date" min={fechaHoy} required />
 <SelectorEstacion bind:estacionSeleccionada={estacionSalida} label="Estacion Origen" />
 <SelectorEstacion bind:estacionSeleccionada={estacionLlegada} label="Estacion Destino" />
 <Button
