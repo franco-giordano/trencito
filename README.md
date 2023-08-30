@@ -12,6 +12,9 @@
 </p>
 
 <p align="center">
+
+### **:warning: No funcional. Trenes Argentinos introdujo un CAPTCHA en su web, por lo que la misma ya no puede ser scrapeada con los metodos actuales. Por lo tanto, Trencito ha sido dado de baja.**
+  
 No te pierdas ningun tren! Trencito te avisa cuando hay pasajes disponibles en Trenes Argentinos, asi conseguis los mejores lugares. Busca automaticamente pasajes de larga distancia usando la <a href="https://webventas.sofse.gob.ar/">pagina oficial de SOFSE.</a>
 </p>
 <p align="center">
